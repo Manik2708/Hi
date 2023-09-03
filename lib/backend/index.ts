@@ -5,6 +5,9 @@ import { tokenValidator } from './APIs/token_validation';
 import { getData } from './APIs/provide_data';
 import { verifyOTP } from './APIs/verify_otp';
 import { sendOTP } from './APIs/send_otp';
+import { login } from './APIs/login';
+import { changeEmail } from './APIs/change_email';
+import { changePassword } from './APIs/change_password';
 const Db="mongodb+srv://mehtamanik96:Dmanika2727@cluster0.m5ofsm1.mongodb.net/?retryWrites=true&w=majority";
 
 const app=express();
@@ -14,6 +17,9 @@ app.use(tokenValidator);
 app.use(getData);
 app.use(verifyOTP);
 app.use(sendOTP);
+app.use(login);
+app.use(changeEmail);
+app.use(changePassword);
 
 mongoose.connect(Db).then(()=>{console.log('Connected to Database')}).catch((e)=>console.log(e.message));
 
