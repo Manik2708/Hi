@@ -10,6 +10,7 @@ import '../providers/set_state_providers.dart';
 import '../providers/user.dart';
 import '../widgets/common_button.dart';
 import '../widgets/common_text_field.dart';
+import 'package:hi/frontend/functions/onClick.dart';
 
 class VerifyEmail extends StatefulWidget {
   const VerifyEmail({super.key});
@@ -24,20 +25,10 @@ class _VerifyEmailState extends State<VerifyEmail> {
   Future<bool> moveToBackScreen()async{
     return false;
   }
-  void onClick(){
-    context.read<SetState>().setVerifyPhone('We have sent you an OTP (One Time Password)');
-    SendOtp sendOtp=SendOtp();
-    sendOtp.sendOtp(context);
-    context.read<SetState>().setVerifyPhoneBtnClr(Colors.grey);
-    context.read<SetState>().setOnPhoneClick((){});
-    context.read<SetState>().setTimerColor(Colors.black);
-    _countdownController.restart();
-    Timer(const Duration(seconds: 30), () {
-      context.read<SetState>().setVerifyPhoneBtnClr(const Color.fromARGB(255, 119, 31, 152));
-      context.read<SetState>().setVerifyPhone('Click on Resend to request another OTP');
-      context.read<SetState>().setVerifyPhoneBtnTxt('Resend OTP');
-      context.read<SetState>().setOnPhoneClick((){onClick();});
-      context.read<SetState>().setTimerColor(Colors.white);
+  void onClickHere(){
+    onClick(context, _countdownController, () {
+      SendOtp sendOtp=SendOtp();
+      sendOtp.sendOtp(context);
     });
   }
   final TextEditingController _emailOTP=TextEditingController();
@@ -49,7 +40,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
   @override
   Widget build(BuildContext context) {
     User user=context.read<UserProvider>().user;
-    context.read<SetState>().setOnPhoneClick(() {onClick();});
+    context.read<SetState>().setOnPhoneClick(() {onClickHere();});
     return WillPopScope(
       onWillPop: moveToBackScreen,
       child: Scaffold(
@@ -74,6 +65,9 @@ class _VerifyEmailState extends State<VerifyEmail> {
                     Text('on the Email: ${user.email}'),
                     const SizedBox(height: 5,),
                     GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamed(context, '/change-email');
+                      },
                       child: const Text('Change Email Address?', style: TextStyle(color: Colors.teal),),
                     )
                   ],

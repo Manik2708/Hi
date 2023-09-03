@@ -49,32 +49,4 @@ async{
     return showDialogBox(context: context, title: 'Error', content: e.toString(), buttonText: null, onClick: null);
   }
 }
-Future<User> ifNotHacked(BuildContext context) async {
-  User user=User(name: '', email: '', anonymousId: '', username: '', password: '', dob: '',  isEmailVerified: false, token: '', id: '');
-  try {
-    SharedPreferences prefs=await SharedPreferences.getInstance();
-    String? token=prefs.getString('token');
-    if(token==null){
-      prefs.setString('token', '');
-      token='';
-    }
-    if(token.isEmpty){
-      return user;
-    }
-      http.Response res=await http.get(Uri.parse('$uri/get-user-data'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'token': token
-        },
-      );
-      httpErrorHandle(res: res, context: context, onSuccess: (){ Provider.of<UserProvider>(context, listen: false).setUser(jsonDecode(res.body));});
-
-      user=context.read<UserProvider>().user;
-
-  }catch(e){
-    showDialogBox(context: context, title: 'Error', content: e.toString(), buttonText: null, onClick: null);
-    return user;
-  }
-return user;
-  }
 }

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hi/frontend/screens/change_email.dart';
+import 'package:hi/frontend/screens/change_password.dart';
 import 'package:hi/frontend/screens/create_account.dart';
 import 'package:hi/frontend/screens/get_started.dart';
 import 'package:hi/frontend/screens/home_screen.dart';
 import 'package:hi/frontend/screens/login.dart';
 
 import 'package:hi/frontend/screens/verify_email.dart';
+import 'package:hi/frontend/screens/verify_otp_change_password.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings){
 switch(routeSettings.name) {
@@ -32,6 +35,21 @@ switch(routeSettings.name) {
     return MaterialPageRoute(
       settings: routeSettings,
       builder: (_)=>const VerifyEmail(),
+    );
+  case '/change-password':
+    return MaterialPageRoute(
+      settings: routeSettings,
+      builder: (_)=>const ChangePassword(),
+    );
+  case '/verification-for-changing-password':
+    return MaterialPageRoute(
+      settings: routeSettings,
+      builder: (_)=>const VerifyChangePassword(),
+    );
+  case '/change-email':
+    return MaterialPageRoute(
+      settings: routeSettings,
+      builder: (_)=>const ChangeEmail(),
     );
   default:
     return MaterialPageRoute(
