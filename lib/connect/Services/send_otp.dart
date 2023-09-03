@@ -11,6 +11,7 @@ import '../../constants/global_variables.dart';
 import '../models/user.dart';
 class SendOtp{
   void sendOtp(BuildContext context)async{
+  try{
     User user=context.read<UserProvider>().user;
     http.Response res=await http.post(Uri.parse('$uri/send-otp'),
       headers: <String, String>{
@@ -18,10 +19,13 @@ class SendOtp{
         'token': user.token
       },
     );
-  // ignore: use_build_context_synchronously
-  httpErrorHandle(res: res, context: context, onSuccess: (){
-    context.read<OtpToken>().setToken(jsonDecode(res.body)['otptoken']);
-    showDialogBox(context: context, title: 'Success', content: 'OTP sent successfully', buttonText: null, onClick: null);
-  });
+    // ignore: use_build_context_synchronously
+    httpErrorHandle(res: res, context: context, onSuccess: (){
+      context.read<OtpToken>().setToken(jsonDecode(res.body)['otptoken']);
+      showDialogBox(context: context, title: 'Success', content: 'OTP sent successfully', buttonText: null, onClick: null);
+    });
+  }catch(e){
+    return showDialogBox(context: context, title: 'Error', content: e.toString(), buttonText: null, onClick: null);
+  }
   }
 }

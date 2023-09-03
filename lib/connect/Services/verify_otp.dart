@@ -11,18 +11,22 @@ import '../../constants/global_variables.dart';
 import '../models/user.dart';
 class VerifyOtp{
   void verifyOtp(BuildContext context, String code)async{
-    User user=context.read<UserProvider>().user;
-    http.Response res=await http.post(Uri.parse('$uri/verify-email'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': user.token
-      },
-      body: jsonEncode({'otptoken': context.read<OtpToken>().otpToken, 'otp': code})
-    );
-    // ignore: use_build_context_synchronously
-    httpErrorHandle(res: res, context: context, onSuccess: (){
-      showDialogBox(context: context, title: 'Success', content: 'Email Verified Successfully', buttonText: null, onClick: null);
-      Navigator.pushNamed(context, '/home-screen');
-    });
+   try{
+     User user=context.read<UserProvider>().user;
+     http.Response res=await http.post(Uri.parse('$uri/verify-email'),
+         headers: <String, String>{
+           'Content-Type': 'application/json; charset=UTF-8',
+           'token': user.token
+         },
+         body: jsonEncode({'otptoken': context.read<OtpToken>().otpToken, 'otp': code})
+     );
+     // ignore: use_build_context_synchronously
+     httpErrorHandle(res: res, context: context, onSuccess: (){
+       showDialogBox(context: context, title: 'Success', content: 'Email Verified Successfully', buttonText: null, onClick: null);
+       Navigator.pushNamed(context, '/home-screen');
+     });
+   }catch(e){
+     return showDialogBox(context: context, title: 'Error', content: e.toString(), buttonText: null, onClick: null);
+   }
   }
 }

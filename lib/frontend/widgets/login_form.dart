@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hi/connect/Services/login.dart';
 import 'package:hi/frontend/providers/show_password.dart';
 import 'package:hi/frontend/widgets/common_text_field.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey=GlobalKey<FormState>();
   final TextEditingController _emailController=TextEditingController();
   final TextEditingController _passwordController=TextEditingController();
+  Login login=Login();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -72,7 +74,7 @@ class _LoginFormState extends State<LoginForm> {
                 text: const Text('Login', style: TextStyle(fontSize: 20),),
                 onClick: (){
                   if(_formKey.currentState!.validate()){
-                    Navigator.pushNamed(context, '/login-screen');
+                    login.login(context, _emailController.text, _passwordController.text);
                   }
                 },
                 height: 46,
@@ -92,6 +94,9 @@ class _LoginFormState extends State<LoginForm> {
                   }
               ),
               GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, '/change-password');
+                },
                 child: const Text('Forgot Password?', style: TextStyle(color: Colors.teal),),
               ),
             ],

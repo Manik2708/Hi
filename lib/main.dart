@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hi/frontend/providers/change_password.dart';
 import 'package:hi/frontend/providers/date_of_birth.dart';
 import 'package:hi/frontend/providers/otp_token.dart';
 import 'package:hi/frontend/providers/set_state_providers.dart';
@@ -15,7 +16,8 @@ void main() {
         ChangeNotifierProvider(create: (context)=>DateOfBirth()),
         ChangeNotifierProvider(create: (context)=>UserProvider()),
         ChangeNotifierProvider(create: (context)=>SetState()),
-        ChangeNotifierProvider(create: (context)=>OtpToken())
+        ChangeNotifierProvider(create: (context)=>OtpToken()),
+        ChangeNotifierProvider(create: (context)=>ChangePasswordProvider())
         ],
           child:const MaterialApp(home: MyApp(),))
       );
