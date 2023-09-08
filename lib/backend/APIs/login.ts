@@ -6,7 +6,7 @@ const login=express.Router();
 
 login.post('/login',async (req, res) => {
     const {identify, password}= req.body;
-    const user=await User.findOne({identify});
+    const user=await User.findOne({email: identify});
     if(user==null){
         return res.status(400).json({'msg': 'No user exists with this username or email address'});
     }

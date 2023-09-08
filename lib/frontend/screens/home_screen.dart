@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hi/frontend/functions/socket_on.dart';
 import 'package:hi/frontend/providers/user.dart';
 import 'package:provider/provider.dart';
 
@@ -14,10 +15,25 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    connectSocket();
+  }
+  void connectSocket()async{
+    socketOn(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final User user=context.read<UserProvider>().user;
     return Scaffold(
-      body:  Center(child: Text(user.token),),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        elevation: 0,
+        actions: [
+          
+        ],
+      ),
     );
   }
 }

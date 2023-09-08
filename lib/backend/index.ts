@@ -8,6 +8,9 @@ import { sendOTP } from './APIs/send_otp';
 import { login } from './APIs/login';
 import { changeEmail } from './APIs/change_email';
 import { changePassword } from './APIs/change_password';
+import {Server} from 'socket.io';
+import http from 'http';
+import { connectToSocket } from './Websockets/base';
 const Db="mongodb+srv://mehtamanik96:Dmanika2727@cluster0.m5ofsm1.mongodb.net/?retryWrites=true&w=majority";
 
 const app=express();
@@ -20,9 +23,17 @@ app.use(sendOTP);
 app.use(login);
 app.use(changeEmail);
 app.use(changePassword);
+const server=http.createServer(app);
 
 mongoose.connect(Db).then(()=>{console.log('Connected to Database')}).catch((e)=>console.log(e.message));
 
-app.listen(3000,'0.0.0.0', ()=>{
+server.listen(3000,'192.168.1.114',()=>{
     console.log('Connected!');
 })
+
+const ioServer=new Server(server);
+
+connectToSocket();
+
+
+export {ioServer};
