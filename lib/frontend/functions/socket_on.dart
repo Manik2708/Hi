@@ -13,11 +13,12 @@ void socketOn(BuildContext context){
         'transports': ['websocket']
       });
       socket!.connect();
+
       socket!.on('socketId', (data)=>{
         debugPrint('connected'),
         debugPrint(data)
       });
-      socket!.emit(EventNames.userOnline, context.read<UserProvider>().user.id);
+      socket!.emit(EventNames.userOnline, context.read<UserProvider>().user.token);
   }
   catch(e){
     showDialogBox(context: context, title: 'Error', content: e.toString(), buttonText: null, onClick: null);
