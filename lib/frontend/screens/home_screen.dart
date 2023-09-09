@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hi/frontend/functions/socket_on.dart';
-import 'package:hi/frontend/providers/user.dart';
+import 'package:hi/frontend/providers/search_user.dart';
+import 'package:hi/frontend/screens/main_screen.dart';
+import 'package:hi/frontend/screens/search_screen.dart';
+import 'package:hi/frontend/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
-
-import '../../connect/models/user.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,10 +31,21 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
-        actions: [
-          
-        ],
+        title: const CustomSearchBar(),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.white,),
+          onPressed: (){}
+        ),
       ),
+      body: Consumer<SearchUserProvider>(
+        builder: (context, state, child){
+          if(state.ifSearchingUser){
+            return const SearchScreen();
+          }
+          return const MainScreen();
+          },
+      )
     );
   }
 }

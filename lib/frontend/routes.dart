@@ -5,6 +5,7 @@ import 'package:hi/frontend/screens/create_account.dart';
 import 'package:hi/frontend/screens/get_started.dart';
 import 'package:hi/frontend/screens/home_screen.dart';
 import 'package:hi/frontend/screens/login.dart';
+import 'package:hi/frontend/screens/main_screen.dart';
 
 import 'package:hi/frontend/screens/verify_email.dart';
 import 'package:hi/frontend/screens/verify_otp_change_password.dart';
@@ -50,6 +51,11 @@ switch(routeSettings.name) {
     return MaterialPageRoute(
       settings: routeSettings,
       builder: (_)=>const ChangeEmail(),
+    );
+  case '/main-screen':
+    return MaterialPageRoute(
+      settings: routeSettings,
+      builder: (_)=>const MainScreen(),
     );
   default:
     return MaterialPageRoute(
