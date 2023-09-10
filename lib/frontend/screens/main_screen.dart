@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/search_user.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -13,12 +10,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0,
-      ),
-      body: const Center(child: Text('main screen'),),
+    return const Scaffold(
+      body: Center(child: Text('main screen'),),
     );
   }
 }
