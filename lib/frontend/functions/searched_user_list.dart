@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
   try{
     socket!.on('searchedUser', (data)
     {
-      context.read<SearchUserProvider>().setBool(true);
+
       context.read<SearchUserProvider>().addSearchedUser(jsonDecode(data));
     }
     );

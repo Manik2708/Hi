@@ -9,20 +9,59 @@ class CustomSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  SizedBox(
-      width: 300,
-      child: TextField(
-        onChanged: (newText){
-         if(newText.trim().isNotEmpty){
-           socket!.emit('searchUser', newText);
-           getUserList(context);
-         }
-         else{
-           context.read<SearchUserProvider>().clearList();
-           context.read<SearchUserProvider>().setBool(false);
-           socket!.off('searchedUser');
-         }
-        },
+    return  Container(
+      padding: const EdgeInsets.only(top: 10),
+      width: 350,
+      height: 55,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        children: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black,),
+            onPressed: (){
+              context.read<SearchUserProvider>().setSearchButtonClicked(false);
+              context.read<SearchUserProvider>().setBool(false);
+            },
+          ),
+          Container(
+            width: 300,
+            height: 55,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 1.5
+                  )
+                )
+              ),
+              style: const TextStyle(
+                fontSize: 16
+              ),
+              onChanged: (newText){
+               if(newText.trim().isNotEmpty){
+                 context.read<SearchUserProvider>().setBool(true);
+                 socket!.emit('searchUser', newText);
+                 getUserList(context);
+               }
+               else{
+                 context.read<SearchUserProvider>().clearList();
+                 context.read<SearchUserProvider>().setBool(false);
+                 socket!.off('searchedUser');
+               }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
