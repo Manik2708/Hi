@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 
 class CommonTextField extends StatelessWidget {
   final TextEditingController controller;
+  final FocusNode focusNode;
   final bool? obscureText;
   final bool? readOnly;
   final bool? isPhone;
   final TextAlign? textAlign;
   final String?Function(String?)? validator;
-  const CommonTextField({super.key, required this.controller, this.obscureText, this.readOnly, this.isPhone, this.validator, this.textAlign});
+  final int? maxLines;
+  final double? height;
+  final String? hintText;
+  final bool? autoFocus;
+  const CommonTextField({super.key, required this.controller,required this.focusNode, this.obscureText, this.readOnly, this.isPhone, this.validator, this.textAlign, this.maxLines, this.height, this.hintText, this.autoFocus});
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +22,15 @@ class CommonTextField extends StatelessWidget {
             shape: BoxShape.rectangle
       ),
       width: 350,
-      height: 75,
+      height: height??75,
       child: TextFormField(
+        autofocus: autoFocus??false,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
                 borderSide: const BorderSide(
                   width: 10,
-          )
+          ),
           ),
           enabledBorder:  OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
@@ -32,7 +38,8 @@ class CommonTextField extends StatelessWidget {
               color: Colors.black,
               width: 1.5
             )
-          )
+          ),
+          hintText: hintText
         ),
       controller: controller,
      obscureText: obscureText==null?false:obscureText!,
@@ -45,6 +52,7 @@ class CommonTextField extends StatelessWidget {
           return null;
         },
         textAlign: textAlign==null?TextAlign.start:textAlign!,
+        maxLines: maxLines ?? 1,
       ),
     );
   }

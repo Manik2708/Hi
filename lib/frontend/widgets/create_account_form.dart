@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hi/connect/Services/create%7C_account.dart';
+import 'package:hi/frontend/functions/hide_keyboard.dart';
 import 'package:hi/frontend/widgets/common_text_field.dart';
 import 'package:hi/frontend/widgets/date_picker.dart';
 import 'package:hi/frontend/widgets/dialogue_box.dart';
@@ -40,7 +41,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
             width: 150,
             child: Text('Name', style: TextStyle(fontSize: 15)),
           ),
-          CommonTextField(controller: _nameController),
+          CommonTextField(controller: _nameController, focusNode: focusNode,),
           const SizedBox(
             height: 20,
           ),
@@ -49,7 +50,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
             width: 150,
             child: Text('Username', style: TextStyle(fontSize: 15)),
           ),
-          CommonTextField(controller: _userNameController),
+          CommonTextField(controller: _userNameController, focusNode: focusNode,),
           const SizedBox(
             height: 20,
           ),
@@ -58,7 +59,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
             width: 150,
             child: Text('Email', style: TextStyle(fontSize: 15)),
           ),
-          CommonTextField(controller: _emailController, validator: (val){
+          CommonTextField(controller: _emailController, focusNode: focusNode, validator: (val){
             RegExp emailValid=RegExp(r'\S+@\S+\.\S+');
             if(val==null||val.isEmpty){
               return 'This field cannot be empty';
@@ -88,7 +89,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                     child: Text('Date of Birth', style: TextStyle(fontSize: 15)),
                   ),
                 ),
-                CommonTextField(controller: _dobController, readOnly: true,),
+                CommonTextField(controller: _dobController, readOnly: true, focusNode: focusNode,),
               ],
             ),
           ),
@@ -100,7 +101,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
             width: 150,
             child: Text('Password', style: TextStyle(fontSize: 15)),
           ),
-          Consumer<ShowPassword>(builder: (context, show, child)=>CommonTextField(controller: _passwordController, obscureText: show.boolShowPassword, validator: (val){
+          Consumer<ShowPassword>(builder: (context, show, child)=>CommonTextField(controller: _passwordController, focusNode: focusNode, obscureText: show.boolShowPassword, validator: (val){
             RegExp pass_valid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
             if(val==null||val.isEmpty){
               return 'This field cannot be empty';

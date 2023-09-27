@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hi/frontend/functions/hide_keyboard.dart';
 import 'package:hi/frontend/widgets/create_account_form.dart';
 import 'package:hi/frontend/widgets/date_picker.dart';
 import 'package:provider/provider.dart';
@@ -28,23 +29,26 @@ class _CreateAccountState extends State<CreateAccount> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        leading: GestureDetector(
-          onTap: (){
-            Navigator.pop(context);
-          },
-          child: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.black, size: 30,),
+    return GestureDetector(
+      onTap: hideKeyboard,
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          leading: GestureDetector(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.black, size: 30,),
+          ),
+          title: const Text('Create Account', style: TextStyle(color: Colors.black, fontSize: 25),),
+          centerTitle: true,
         ),
-        title: const Text('Create Account', style: TextStyle(color: Colors.black, fontSize: 25),),
-        centerTitle: true,
-      ),
-      body: const Padding(
-        padding: EdgeInsets.only(left: 18),
-        child: SingleChildScrollView(
-          child: CreateAccountForm()
+        body: const Padding(
+          padding: EdgeInsets.only(left: 18),
+          child: SingleChildScrollView(
+            child: CreateAccountForm()
+          ),
         ),
       ),
     );

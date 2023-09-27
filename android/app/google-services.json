@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "906177843909",
+    "project_id": "hichat-1c68d",
+    "storage_bucket": "hichat-1c68d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906177843909:android:e64a2d589cb9ec0e3556ac",
+        "android_client_info": {
+          "package_name": "com.example.hi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQP9c0Ff2JEcwppZ1uG2YZjLxPVKLvQ_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

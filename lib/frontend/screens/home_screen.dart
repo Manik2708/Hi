@@ -1,4 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:hi/frontend/functions/send_firebase_registration_token.dart';
 import 'package:hi/frontend/functions/socket_on.dart';
 import 'package:hi/frontend/providers/search_user.dart';
 import 'package:hi/frontend/providers/user.dart';
@@ -6,6 +8,9 @@ import 'package:hi/frontend/screens/main_screen.dart';
 import 'package:hi/frontend/screens/search_screen.dart';
 import 'package:hi/frontend/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../constants/global_variables.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,11 +26,26 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     connectSocket();
+    getToken(context);
   }
   void connectSocket()async{
     socketOn(context);
   }
-
+  void getToken(BuildContext context)async{
+    final fcmToken = await FirebaseMessaging.instance.getToken();
+    sendToken(fcmToken!, context);
+    FirebaseMessaging.instance.onTokenRefresh
+        .listen((fcmToken) {
+          socket!.emit(EventNames.updateFirebaseConfession,{
+            'token': fcmToken,
+            'id': context.read<UserProvider>().user.id
+          });
+    })
+        .onError((err) {});
+    socket!.on(EventNames.tokenLost, (data)async{
+      getToken(context);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

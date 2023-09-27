@@ -1,4 +1,5 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:hi/frontend/providers/change_password.dart';
 import 'package:hi/frontend/providers/date_of_birth.dart';
@@ -10,8 +11,11 @@ import 'package:hi/frontend/routes.dart';
 import 'package:hi/frontend/screens/splash.dart';
 import 'package:provider/provider.dart';
 import 'package:hi/frontend/providers/show_password.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+
+void main()async {
   runApp(
       MultiProvider(providers: [
         ChangeNotifierProvider(create: (context)=>ShowPassword()),
@@ -24,6 +28,9 @@ void main() {
         ],
           child:const MaterialApp(home: MyApp(),))
       );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+
 }
 
 class MyApp extends StatefulWidget {
