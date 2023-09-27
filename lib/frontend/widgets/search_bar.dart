@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hi/frontend/functions/searched_user_list.dart';
 import 'package:hi/frontend/functions/socket_on.dart';
 import 'package:hi/frontend/providers/search_user.dart';
+import 'package:hi/frontend/providers/user.dart';
 import 'package:provider/provider.dart';
-
+import 'package:hi/constants/global_variables.dart';
 class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({super.key});
 
@@ -32,6 +33,7 @@ class CustomSearchBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: TextField(
+              autofocus: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -50,13 +52,17 @@ class CustomSearchBar extends StatelessWidget {
               onChanged: (newText){
                if(newText.trim().isNotEmpty){
                  context.read<SearchUserProvider>().setBool(true);
-                 socket!.emit('searchUser', newText);
+                 socket!.emit(EventNames.searchUser,
+                     {"query": newText,
+                       "id": context.read<UserProvider>().user.id
+                     }
+                   );
                  getUserList(context);
                }
                else{
                  context.read<SearchUserProvider>().clearList();
                  context.read<SearchUserProvider>().setBool(false);
-                 socket!.off('searchedUser');
+                 socket!.off(EventNames.searchedUser);
                }
               },
             ),

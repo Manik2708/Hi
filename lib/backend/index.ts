@@ -11,6 +11,7 @@ import { changePassword } from './APIs/change_password';
 import {Server} from 'socket.io';
 import http from 'http';
 import { connectToSocket } from './Websockets/base';
+import Redis from 'ioredis';
 const Db="mongodb+srv://mehtamanik96:Dmanika2727@cluster0.m5ofsm1.mongodb.net/?retryWrites=true&w=majority";
 
 const app=express();
@@ -27,13 +28,12 @@ const server=http.createServer(app);
 
 mongoose.connect(Db).then(()=>{console.log('Connected to Database')}).catch((e)=>console.log(e.message));
 
-server.listen(3000,'192.168.1.116',()=>{
+server.listen(3000,'192.168.1.118',()=>{
     console.log('Connected!');
 })
 
 const ioServer=new Server(server);
-
+const client=new Redis();
 connectToSocket();
 
-
-export {ioServer};
+export {ioServer, client};

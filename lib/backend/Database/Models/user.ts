@@ -1,15 +1,7 @@
 import mongoose, {Schema, model} from 'mongoose';
-
-interface UserModel extends mongoose.Document{
-    name: String,
-    username: String,
-    email: String,
-    password: String,
-    dob: Date,
-    isEmailVerified: Boolean,
-    anonymousId: String,
-    _doc?: any
-}
+import { confessionSchema } from './confession';
+import { UserModel } from '../../Models/user';
+import { recieveConfession } from '../../event_names';
 const userSchema=new Schema<UserModel>({
     name:{
         type: String,
@@ -38,7 +30,17 @@ const userSchema=new Schema<UserModel>({
     anonymousId:{
         type: String,
         required: true
-    }
+    },
+    sentConfessions:[
+        {
+            confessions: confessionSchema
+        },
+    ],
+    recievedConfessions:[
+        {
+            confessions: confessionSchema
+        },
+    ]
 });
 const User=model('User', userSchema);
 export {User};

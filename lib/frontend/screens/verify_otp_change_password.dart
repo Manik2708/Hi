@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:hi/frontend/functions/hide_keyboard.dart';
 import 'package:hi/frontend/providers/change_password.dart';
 import 'package:provider/provider.dart';
 import 'package:timer_count_down/timer_controller.dart';
@@ -38,58 +39,61 @@ class _VerifyChangePasswordState extends State<VerifyChangePassword> {
   Widget build(BuildContext context) {
     context.read<SetState>().setOnPhoneClick(() {onClickHere();});
     context.read<SetState>().setVerifyPhoneBtnTxt('Resend OTP');
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0,
-        leading: null,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Change Your ', style: TextStyle(fontSize:35, color: Colors.black, fontWeight: FontWeight.bold),),
-            const Text('Password', style: TextStyle(fontSize:35, color: Colors.black, fontWeight: FontWeight.bold) ),
-            const SizedBox(height: 100,),
-            Center(
-              child: Column(
+    return GestureDetector(
+      onTap: hideKeyboard,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          elevation: 0,
+          leading: null,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Change Your ', style: TextStyle(fontSize:35, color: Colors.black, fontWeight: FontWeight.bold),),
+              const Text('Password', style: TextStyle(fontSize:35, color: Colors.black, fontWeight: FontWeight.bold) ),
+              const SizedBox(height: 100,),
+              Center(
+                child: Column(
+                  children: [
+                    Consumer<SetState>(builder:(context, setState, child)=> Text(setState.verifyPhone)),
+                    const SizedBox(height: 5,),
+                    const Text('on your respective Email Address'),
+                    const SizedBox(height: 5,),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10,),
+              Center(child: CommonTextField(controller: _password, focusNode: focusNode,),),
+              const SizedBox(height: 10,),
+              Center(child: CommonTextField(controller: _otp, isPhone: true, textAlign: TextAlign.center, focusNode: focusNode,)),
+              Padding(
+                padding:  const EdgeInsets.only(left: 35),
+                child:  Countdown(
+                  controller: _countdownController,
+                  seconds: 30,
+                  build: (context, sec){
+                    return Consumer<SetState>(builder:(context, setState, child)=> Text('Wait for ${sec.toInt().toString()}s', style: TextStyle(color: setState.timerTextColor),));
+                  },
+                ),
+              ),
+              const SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Consumer<SetState>(builder:(context, setState, child)=> Text(setState.verifyPhone)),
-                  const SizedBox(height: 5,),
-                  const Text('on your respective Email Address'),
-                  const SizedBox(height: 5,),
+                  Consumer<SetState>(
+                    builder:(context, setState, child)=> CommonButton(text:  Text(setState.verifyPhoneBtnTxt),color: setState.verifyPhoneBtnClr, onClick: setState.onPhoneVerifyClick,
+                      width: 150, height: 40,),
+                  ),
+                  CommonButton(text: const Text('Verify'), onClick: (){
+                    changePasswordServices.verifyOtp(context, _otp.text, _password.text);
+                  }, width: 150,height: 40,),
                 ],
               ),
-            ),
-            const SizedBox(height: 10,),
-            Center(child: CommonTextField(controller: _password,),),
-            const SizedBox(height: 10,),
-            Center(child: CommonTextField(controller: _otp, isPhone: true, textAlign: TextAlign.center,)),
-            Padding(
-              padding:  const EdgeInsets.only(left: 35),
-              child:  Countdown(
-                controller: _countdownController,
-                seconds: 30,
-                build: (context, sec){
-                  return Consumer<SetState>(builder:(context, setState, child)=> Text('Wait for ${sec.toInt().toString()}s', style: TextStyle(color: setState.timerTextColor),));
-                },
-              ),
-            ),
-            const SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Consumer<SetState>(
-                  builder:(context, setState, child)=> CommonButton(text:  Text(setState.verifyPhoneBtnTxt),color: setState.verifyPhoneBtnClr, onClick: setState.onPhoneVerifyClick,
-                    width: 150, height: 40,),
-                ),
-                CommonButton(text: const Text('Verify'), onClick: (){
-                  changePasswordServices.verifyOtp(context, _otp.text, _password.text);
-                }, width: 150,height: 40,),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
