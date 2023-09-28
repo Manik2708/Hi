@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hi/frontend/functions/send_firebase_registration_token.dart';
@@ -27,6 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     connectSocket();
     getToken(context);
+    socket!.on(EventNames.recieveConfession, (data){
+      debugPrint(data.toString());
+    });
   }
   void connectSocket()async{
     socketOn(context);

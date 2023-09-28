@@ -1,11 +1,11 @@
 import {client} from '..';
 
-export const ifUserIsOnline=async(userId: string): Promise<number>=>{
+export const ifUserIsOnline=async(userId: string): Promise<boolean>=>{
    try{
-    return client.sismember('online-users', userId);
+    return client.sIsMember('online-users', userId);
    }
    catch(e: any){
-    console.log(e.toString());
-    return 0;
+    console.log(e.toString()+ 'here in if online users');
+    return false;
    }
 }

@@ -5,7 +5,7 @@ import {client} from '..';
 export const updateFirebaseConfessionFxn=async(socket: Socket)=>{
     try{
         socket.on(EventNames.updateFirebaseConfession, async(data)=>{
-            await client.hset(data.id, {
+            await client.hSet(data.id, {
                 'firebasetoken': data.token
             })
         });
