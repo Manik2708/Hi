@@ -11,7 +11,11 @@ import { changePassword } from './APIs/change_password';
 import {Server} from 'socket.io';
 import http from 'http';
 import { connectToSocket } from './Websockets/base';
-import Redis from 'ioredis';
+import { createClient } from 'redis';
+import { sendConfession } from './APIs/send_confession';
+import { saveFirebaseToken } from './APIs/firebase_token';
+import { connectToRabit } from './queues/base';
+
 const Db="mongodb+srv://mehtamanik96:Dmanika2727@cluster0.m5ofsm1.mongodb.net/?retryWrites=true&w=majority";
 
 const app=express();
@@ -24,6 +28,9 @@ app.use(sendOTP);
 app.use(login);
 app.use(changeEmail);
 app.use(changePassword);
+app.use(sendConfession);
+app.use(saveFirebaseToken);
+
 const server=http.createServer(app);
 
 mongoose.connect(Db).then(()=>{console.log('Connected to Database')}).catch((e)=>console.log(e.message));
@@ -31,9 +38,16 @@ mongoose.connect(Db).then(()=>{console.log('Connected to Database')}).catch((e)=
 server.listen(3000,'192.168.1.118',()=>{
     console.log('Connected!');
 })
-
+const client = createClient();
+const connect=async()=>{
+    await client.connect();
+}
 const ioServer=new Server(server);
-const client=new Redis();
+client.on('error', err => console.log('Redis Client Error', err));
+connect();
+
 connectToSocket();
+connectToRabit();
+
 
 export {ioServer, client};

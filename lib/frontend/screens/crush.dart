@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hi/connect/models/crush_model.dart';
+import 'package:hi/frontend/functions/send_confession.dart';
 import 'package:hi/frontend/widgets/common_button.dart';
 import 'package:hi/frontend/widgets/common_text_field.dart';
 
@@ -84,7 +85,9 @@ class CrushScreen extends StatelessWidget {
             const SizedBox(height: 30,),
             Center(child: CommonTextField(controller: _confessionController, maxLines: 200, height: 300, hintText: 'Write your Confession here',focusNode: _focusNode,)),
             const SizedBox(height: 10,),
-            Center(child: CommonButton(text: const Text('Confess'), onClick: (){}, width: 350, height: 50,),)
+            Center(child: CommonButton(text: const Text('Confess'), onClick: (){
+              sendConfession(crush, context, _confessionController.text);
+            }, width: 350, height: 50,),)
           ],
         ),
       ),
