@@ -1,22 +1,19 @@
-import amqp, {Channel, Connection} from 'amqplib'
+import amqp from 'amqplib/callback_api'
 
-var sendingChannelForApis: Channel;
-var recievingChannelForApis: Channel;
-export const connectToRabit=()=>{
-    amqp.connect('amqp://localhost', async function(error: any, connection: Connection){
+
+export const createChannel=(callback: (chnl: amqp.Channel)=>void)=>{
+    amqp.connect('amqp://localhost', async function(error: any, connection: amqp.Connection){
         if(error){
             console.log(error);
-        }
-       try{
-        const sendingChannel: Channel=await connection.createChannel();
-        const recievingChannel: Channel=await connection.createChannel();
-        sendingChannelForApis=sendingChannel
-        recievingChannelForApis=recievingChannel
-       }catch(e: any){
+        }   
+        try{
+        connection.createChannel((err, channel)=>{
+            callback(channel);
+        })
+       }
+       catch(e: any){
         console.log(e.toString());
        }
 
     })
 }
-
-export {sendingChannelForApis, recievingChannelForApis}

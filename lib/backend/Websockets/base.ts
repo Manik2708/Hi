@@ -2,7 +2,7 @@ import { ioServer } from "..";
 import { onlineUsers } from "./user_online";
 import * as EventNames from '../event_names';
 import { searchUser } from "./search_user";
-import { updateFirebaseConfessionFxn } from "./update_firebase_token";
+
 import { Socket } from "socket.io";
 
 var socketfotApis: Socket;
@@ -14,7 +14,6 @@ ioServer.on('connection', (socket)=>{
     socket.emit(EventNames.socketId, socket.id);
     onlineUsers(socket);
     searchUser(socket);
-    updateFirebaseConfessionFxn(socket);
 });
 }catch(e: any){
     console.log(e);
