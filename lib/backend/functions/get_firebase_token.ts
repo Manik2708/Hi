@@ -12,6 +12,7 @@ export const getFirebaseToken=async(CrushId: string): Promise<string>=>{
     return firebaseToken!;
     }
     catch(e: any){
+        console.log(e.toString())
         return 'false'
     }
 }

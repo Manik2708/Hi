@@ -1,18 +1,17 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/material.dart';
-import 'package:hi/frontend/functions/send_firebase_registration_token.dart';
+import 'package:hi/frontend/functions/send_token_from_screen.dart';
 import 'package:hi/frontend/functions/socket_on.dart';
 import 'package:hi/frontend/providers/search_user.dart';
-import 'package:hi/frontend/providers/user.dart';
 import 'package:hi/frontend/screens/main_screen.dart';
+import 'package:hi/frontend/screens/recieved_confessions.dart';
 import 'package:hi/frontend/screens/search_screen.dart';
+import 'package:hi/frontend/screens/sent_confessions.dart';
+import 'package:hi/frontend/widgets/app_bar_when_not_searching.dart';
 import 'package:hi/frontend/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../constants/global_variables.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,28 +28,16 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     connectSocket();
     getToken(context);
-    socket!.on(EventNames.recieveConfession, (data){
-      debugPrint(data.toString());
-    });
   }
   void connectSocket()async{
     socketOn(context);
   }
-  void getToken(BuildContext context)async{
-    final fcmToken = await FirebaseMessaging.instance.getToken();
-    sendToken(fcmToken!, context);
-    FirebaseMessaging.instance.onTokenRefresh
-        .listen((fcmToken) {
-          socket!.emit(EventNames.updateFirebaseConfession,{
-            'token': fcmToken,
-            'id': context.read<UserProvider>().user.id
-          });
-    })
-        .onError((err) {});
-    socket!.on(EventNames.tokenLost, (data)async{
-      getToken(context);
-    });
-  }
+  static const List<Widget> screens=[
+     MainScreen(),
+     SentConfession(),
+     ReceivedConfessions()
+  ];
+  int applyChanges=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,31 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         actions: [
              Consumer<SearchUserProvider>(builder: (context, state, child)=>
-                 state.ifSearchButtonClicked==false?Row(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                     IconButton(onPressed: (){}, icon: const Icon(Icons.account_circle_rounded, size: 52,), color: Colors.black,),
-                     Container(
-                       padding: const EdgeInsets.only(top:15, left: 10),
-                       child: SizedBox(
-                         width: 75,
-                         child: Column(
-                           crossAxisAlignment: CrossAxisAlignment.start,
-                           children: [
-                             Text(context.read<UserProvider>().user.name, style: const TextStyle(color: Colors.black, fontSize: 20), overflow: TextOverflow.ellipsis,),
-                             const SizedBox(height: 2,),
-                             Text(context.read<UserProvider>().user.username, style: const TextStyle(color: Colors.grey, fontSize: 10),overflow: TextOverflow.ellipsis),
-                           ],
-                         ),
-                       ),
-                     ),
-                     const SizedBox(width: 200,),
-                     Padding(
-                       padding: const EdgeInsets.only(left: 10),
-                       child: IconButton(onPressed: (){context.read<SearchUserProvider>().setSearchButtonClicked(true);}, icon: const Icon(Icons.person_search, color: Colors.black, size: 35,)),
-                     ),
-                   ],
-                 ):const Row(
+                 state.ifSearchButtonClicked==false?appBarWhenNotSearching(context):const Row(
                    children: [
                      CustomSearchBar(),
                      SizedBox(width: 30,)
@@ -98,9 +61,22 @@ class _HomeScreenState extends State<HomeScreen> {
           if(state.ifSearchingUser){
             return const SearchScreen();
           }
-          return const MainScreen();
+          return screens[applyChanges];
           },
-      )
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: applyChanges,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.send), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: '')
+        ],
+        onTap: (selectedScreen){
+          setState(() {
+            applyChanges=selectedScreen;
+          });
+        },
+      ),
     );
   }
 }
