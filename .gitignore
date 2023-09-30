@@ -43,3 +43,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /node_modules
+/lib/firebase_options.dart
+/lib/backend/hichat-1c68d-firebase-adminsdk-ov8j7-a516f3c87f.json
