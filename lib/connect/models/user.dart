@@ -1,17 +1,27 @@
 import 'dart:convert';
+import 'package:hive/hive.dart';
 
-import 'package:json_annotation/json_annotation.dart';
 
-
+part 'user.g.dart';
+@HiveType(typeId: 0)
 class User{
+  @HiveField(0)
   final String name;
+  @HiveField(1)
   final String email;
+  @HiveField(2)
   final String anonymousId;
+  @HiveField(3)
   final String username;
+  @HiveField(4)
   final String password;
+  @HiveField(5)
   final String dob;
+  @HiveField(6)
   final bool isEmailVerified;
+  @HiveField(7)
   final String token;
+  @HiveField(8)
   final String id;
   User( {
     required this.name,

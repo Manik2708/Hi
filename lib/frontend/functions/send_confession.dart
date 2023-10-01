@@ -8,13 +8,13 @@ import 'package:hi/constants/global_variables.dart';
 import 'package:hi/frontend/providers/user.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-void sendConfession(CrushModel crush, BuildContext context, String Confession)async{
+void sendConfession(CrushModel crush, BuildContext context, String confessionText)async{
   ConfessionModel confession=ConfessionModel(
       id: '',
       SenderId: context.read<UserProvider>().user.id,
       SenderAnonymousId: context.read<UserProvider>().user.anonymousId,
       CrushId: crush.id,
-      Confession: Confession,
+      Confession: confessionText,
       Time: DateTime.now().toString(),
       status: ''
   );
@@ -25,5 +25,7 @@ void sendConfession(CrushModel crush, BuildContext context, String Confession)as
     },
     body: confession.toJson(confession)
   );
-  httpErrorHandle(res: res, context: context, onSuccess: (){});
+  httpErrorHandle(res: res, context: context, onSuccess: (){
+
+  });
 }

@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:hi/connect/httpErrorHandle.dart';
+import 'package:hi/frontend/functions/update_user_data_in_cache.dart';
 import 'package:hi/frontend/providers/otp_token.dart';
 import 'package:hi/frontend/providers/user.dart';
 import 'package:hi/frontend/widgets/dialogue_box.dart';
@@ -20,9 +23,9 @@ class VerifyOtp{
          },
          body: jsonEncode({'otptoken': context.read<OtpToken>().otpToken, 'otp': code})
      );
-     // ignore: use_build_context_synchronously
-     httpErrorHandle(res: res, context: context, onSuccess: (){
+     httpErrorHandle(res: res, context: context, onSuccess: ()async{
        showDialogBox(context: context, title: 'Success', content: 'Email Verified Successfully', buttonText: null, onClick: null);
+       await updateUserDataInCache(context);
        Navigator.pushNamed(context, '/home-screen');
      });
    }catch(e){

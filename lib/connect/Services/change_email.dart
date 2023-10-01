@@ -1,10 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:hi/connect/httpErrorHandle.dart';
-import 'package:hi/frontend/functions/getUserData.dart';
+import 'package:hi/frontend/functions/update_user_data_in_cache.dart';
 import 'package:hi/frontend/providers/user.dart';
 import 'package:hi/frontend/widgets/dialogue_box.dart';
 import 'package:http/http.dart' as http;
@@ -27,7 +25,7 @@ try {
       })
   );
   httpErrorHandle(res: res, context: context, onSuccess: () async {
-    await ifNotHacked(context);
+    await updateUserDataInCache(context);
     showDialogBox(context: context,
         title: 'Success',
         content: 'Email Changed Successfully',

@@ -29,7 +29,7 @@ class Login{
        Provider.of<UserProvider>(context, listen: false).setUser(jsonDecode(res.body));
        showDialogBox(context: context, title: 'Success', content: 'Login Successful', buttonText: null, onClick: null);
        if(context.read<UserProvider>().user.isEmailVerified){
-         Navigator.pushNamed(context, '/home-screen');
+         Navigator.pushNamed(context, '/retrieve-chats');
        }
        else{
          Navigator.pushNamed(context, '/email-verification');

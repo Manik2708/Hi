@@ -2,7 +2,9 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hi/connect/models/user_with_chats.dart';
 import 'package:hi/constants/global_variables.dart';
+import 'package:hi/frontend/boxes.dart';
 import 'package:hi/frontend/providers/user.dart';
 import 'package:hi/frontend/widgets/dialogue_box.dart';
 import 'package:provider/provider.dart';
@@ -41,9 +43,8 @@ async{
          Navigator.pushNamed(context, '/email-verification');
        });
       await prefs.setString('token', jsonDecode(res.body)['token']);
+      userDataBox.put('userdata', UserWithChats.fromJson(jsonDecode(res.body)));
        Provider.of<UserProvider>(context, listen: false).setUser(jsonDecode(res.body));
-
-
     });
   }catch(e){
     return showDialogBox(context: context, title: 'Error', content: e.toString(), buttonText: null, onClick: null);

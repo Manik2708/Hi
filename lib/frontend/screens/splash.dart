@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:hi/frontend/functions/get_user_data_from_cache.dart';
+import 'package:hi/frontend/functions/update_user_data_in_cache.dart';
 import '../../connect/Services/create|_account.dart';
 import '../../connect/models/user.dart';
-import 'package:hi/frontend/functions/getUserData.dart';
 class Splash extends StatefulWidget {
   const Splash({super.key});
 
@@ -18,15 +21,22 @@ class _SplashState extends State<Splash> {
     getData();
   }
   getData()async{
-    User user= await ifNotHacked(context);
+    User user= await getUserDataFromCache(context);
+
     var duration=const Duration(seconds: 0);
-    return  Timer(duration, () {
+    return  Timer(duration, () async{
       if(user.token.isEmpty){
         Navigator.pushNamed(context, '/get-started');
       }
       else{
         if(user.isEmailVerified==false){
-          Navigator.pushNamed(context,'/email-verification');
+          User updatedUser=await updateUserDataInCache(context);
+          if(updatedUser.isEmailVerified==false){
+            Navigator.pushNamed(context,'/email-verification');
+          }
+          else{
+            Navigator.pushNamed(context,'/home-screen');
+          }
         }
         else{
           Navigator.pushNamed(context,'/home-screen');
@@ -34,7 +44,6 @@ class _SplashState extends State<Splash> {
       }
     }
     );
-
   }
   @override
   Widget build(BuildContext context) {
