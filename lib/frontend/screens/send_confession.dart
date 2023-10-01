@@ -27,8 +27,7 @@ class CrushScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-                 SizedBox(height: 70,width: 350,
-                child: Row(
+                 SizedBox(height: 70,width: 350, child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Icon(Icons.account_circle_rounded, size: 70,),

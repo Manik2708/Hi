@@ -3,7 +3,8 @@ import 'package:hi/connect/models/crush_model.dart';
 import 'package:hi/frontend/screens/change_email.dart';
 import 'package:hi/frontend/screens/change_password.dart';
 import 'package:hi/frontend/screens/create_account.dart';
-import 'package:hi/frontend/screens/crush.dart';
+import 'package:hi/frontend/screens/retrieve_chats.dart';
+import 'package:hi/frontend/screens/send_confession.dart';
 import 'package:hi/frontend/screens/get_started.dart';
 import 'package:hi/frontend/screens/home_screen.dart';
 import 'package:hi/frontend/screens/login.dart';
@@ -64,6 +65,11 @@ switch(routeSettings.name) {
     return MaterialPageRoute(
       settings: routeSettings,
       builder: (_)=>CrushScreen(crush: crush,),
+    );
+  case '/retrieve-chats':
+    return MaterialPageRoute(
+      settings: routeSettings,
+      builder: (_)=>const RetrieveChats(),
     );
   default:
     return MaterialPageRoute(

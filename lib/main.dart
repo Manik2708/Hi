@@ -1,6 +1,9 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:hi/connect/models/user.dart';
+import 'package:hi/connect/models/user_with_chats.dart';
+import 'package:hi/frontend/boxes.dart';
 import 'package:hi/frontend/providers/change_password.dart';
 import 'package:hi/frontend/providers/date_of_birth.dart';
 import 'package:hi/frontend/providers/otp_token.dart';
@@ -9,6 +12,7 @@ import 'package:hi/frontend/providers/set_state_providers.dart';
 import 'package:hi/frontend/providers/user.dart';
 import 'package:hi/frontend/routes.dart';
 import 'package:hi/frontend/screens/splash.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:hi/frontend/providers/show_password.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,6 +20,12 @@ import 'firebase_options.dart';
 
 
 void main()async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter(UserWithChatsAdapter());
+  userDataBox=await Hive.openBox('UserData');
+  sentConfessions=await Hive.openBox('SentConfessions');
+  recievedConfessions=await Hive.openBox('RecievedConfessions');
   runApp(
       MultiProvider(providers: [
         ChangeNotifierProvider(create: (context)=>ShowPassword()),
@@ -29,7 +39,6 @@ void main()async {
           child:const MaterialApp(home: MyApp(),))
       );
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
 
 }
 

@@ -11,7 +11,7 @@ class ConfessionModel{
 
   ConfessionModel({required this.SenderId, required this.SenderAnonymousId, required this.CrushId, required this.Confession, required this.Time, required this.id, required this.status});
 
-  ConfessionModel _confessionFromJson(Map<String, dynamic> json)=>ConfessionModel(
+  factory ConfessionModel._confessionFromJson(Map<String, dynamic> json)=>ConfessionModel(
     id: json['_id'] as String,
     SenderId: json['SenderId'] as String,
     SenderAnonymousId: json['SenderAnonymousId'] as String,
@@ -29,6 +29,6 @@ class ConfessionModel{
     'Time': instance.Time,
     'status': instance.status
   };
-  ConfessionModel fromJson(Map<String, dynamic> json)=>_confessionFromJson(json);
+  factory ConfessionModel.fromJson(Map<String, dynamic> json)=>ConfessionModel._confessionFromJson(json);
   String toJson(ConfessionModel confession)=>jsonEncode(_confessionToJson(confession));
 }
