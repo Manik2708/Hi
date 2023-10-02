@@ -8,7 +8,7 @@ import 'package:hi/frontend/providers/search_user.dart';
 import 'package:hi/frontend/screens/main_screen.dart';
 import 'package:hi/frontend/screens/recieved_confessions.dart';
 import 'package:hi/frontend/screens/search_screen.dart';
-import 'package:hi/frontend/screens/sent_confessions.dart';
+import 'package:hi/frontend/screens/sent_confessions_list.dart';
 import 'package:hi/frontend/widgets/app_bar_when_not_searching.dart';
 import 'package:hi/frontend/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   static const List<Widget> screens=[
      MainScreen(),
-     SentConfession(),
+     SentConfessionsList(),
      ReceivedConfessions()
   ];
   int applyChanges=0;

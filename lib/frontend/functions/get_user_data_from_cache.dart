@@ -21,7 +21,9 @@ Future<User> getUserDataFromCache(BuildContext context) async {
     if(token.isEmpty){
       return user;
     }
-    UserWithChats? userWithChats=userDataBox.get('userdata');
+    debugPrint('yes1');
+    UserWithChats? userWithChats=userDataBox.get(BoxNames.userData);
+    debugPrint(userWithChats!.username);
     context.read<UserProvider>().setUserFromUserWithChat(userWithChats!);
     user=context.read<UserProvider>().user;
     return user;

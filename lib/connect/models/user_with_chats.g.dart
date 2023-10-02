@@ -26,18 +26,19 @@ class UserWithChatsAdapter extends TypeAdapter<UserWithChats> {
       isEmailVerified: fields[6] as bool,
       token: fields[7] as String,
       id: fields[8] as String,
-        sentConfessions: [],
-        recievedConfessions: []
+      sentConfessions: (fields[9] as List?)?.cast<ConfessionModel>(),
+      recievedConfessions: (fields[10] as List?)?.cast<ConfessionModel>(),
     );
   }
+
   @override
   void write(BinaryWriter writer, UserWithChats obj) {
     writer
       ..writeByte(11)
       ..writeByte(9)
-      ..write(obj.sentConfessions?.toList())
+      ..write(obj.sentConfessions)
       ..writeByte(10)
-      ..write(obj.recievedConfessions?.toList())
+      ..write(obj.recievedConfessions)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
