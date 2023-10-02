@@ -1,10 +1,10 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:hi/connect/models/confession.dart';
 import 'package:hi/connect/models/user.dart';
 import 'package:hi/connect/models/user_with_chats.dart';
 import 'package:hi/frontend/boxes.dart';
 import 'package:hi/frontend/providers/change_password.dart';
+import 'package:hi/frontend/providers/confession_list_state.dart';
 import 'package:hi/frontend/providers/date_of_birth.dart';
 import 'package:hi/frontend/providers/otp_token.dart';
 import 'package:hi/frontend/providers/search_user.dart';
@@ -18,11 +18,11 @@ import 'package:hi/frontend/providers/show_password.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-
-void main()async {
+void main()async{
   await Hive.initFlutter();
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(UserWithChatsAdapter());
+  Hive.registerAdapter(ConfessionModelAdapter());
   userDataBox=await Hive.openBox('UserData');
   sentConfessions=await Hive.openBox('SentConfessions');
   recievedConfessions=await Hive.openBox('RecievedConfessions');
@@ -34,7 +34,8 @@ void main()async {
         ChangeNotifierProvider(create: (context)=>SetState()),
         ChangeNotifierProvider(create: (context)=>OtpToken()),
         ChangeNotifierProvider(create: (context)=>ChangePasswordProvider()),
-        ChangeNotifierProvider(create: (context)=>SearchUserProvider())
+        ChangeNotifierProvider(create: (context)=>SearchUserProvider()),
+        ChangeNotifierProvider(create: (context)=>ConfessionList())
         ],
           child:const MaterialApp(home: MyApp(),))
       );

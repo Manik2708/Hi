@@ -33,8 +33,8 @@ class UserWithChats extends User {
     isEmailVerified: json['isEmailVerified'] as bool,
     token: json['token']??'' as String,
     id: json['_id'] as String,
-    sentConfessions: json['sentConfessions']!=null?List<ConfessionModel>.from(json['sentConfessions'].map((x)=>ConfessionModel.fromJson(x))):[],
-    recievedConfessions: json['recievedConfessions']!=null?List<ConfessionModel>.from(json['recievedConfessions'].map((x)=>ConfessionModel.fromJson(x))):[]
+    sentConfessions: json['sentConfessionsList']!=null?List<ConfessionModel>.from(json['sentConfessionsList'].map((x)=>ConfessionModel.fromJson(x))):[],
+    recievedConfessions: json['recievedConfessionsList']!=null?List<ConfessionModel>.from(json['recievedConfessionsList'].map((x)=>ConfessionModel.fromJson(x))):[]
   );
   factory UserWithChats.fromJson(Map<String, dynamic> json)=>UserWithChats._userFromJson(json);
 }

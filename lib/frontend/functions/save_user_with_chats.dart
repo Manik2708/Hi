@@ -19,10 +19,12 @@ Future<void> saveUserWithChats(BuildContext context)async{
       },
     );
     httpErrorHandle(res: res, context: context, onSuccess: ()async{
+      debugPrint(res.body);
       UserWithChats userWithChats=UserWithChats.fromJson(jsonDecode(res.body));
-      userDataBox.put('userdata', userWithChats);
-      sentConfessions.put('sent-confessions-list', userWithChats.sentConfessions!);
-      recievedConfessions.put('recieved-confessions-list', userWithChats.recievedConfessions!);
+      userDataBox.put(BoxNames.userData, userWithChats);
+      debugPrint(userDataBox.get(BoxNames.userData)!.username);
+      sentConfessions.put(BoxNames.sentConfessionsList, userWithChats.sentConfessions!);
+      recievedConfessions.put(BoxNames.recievedConfessionsList, userWithChats.recievedConfessions!);
     });
   }
   catch(e){
