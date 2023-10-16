@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hi/connect/httpErrorHandle.dart';
 import 'package:hi/connect/models/user_with_chats.dart';
 import 'package:hi/frontend/boxes.dart';
+import 'package:hi/frontend/functions/dataStructures/linked_list_from_array_list.dart';
 import 'package:http/http.dart' as http;
 import 'package:hi/constants/global_variables.dart';
 import 'package:provider/provider.dart';
@@ -19,12 +20,10 @@ Future<void> saveUserWithChats(BuildContext context)async{
       },
     );
     httpErrorHandle(res: res, context: context, onSuccess: ()async{
-      debugPrint(res.body);
       UserWithChats userWithChats=UserWithChats.fromJson(jsonDecode(res.body));
       userDataBox.put(BoxNames.userData, userWithChats);
-      debugPrint(userDataBox.get(BoxNames.userData)!.username);
-      sentConfessions.put(BoxNames.sentConfessionsList, userWithChats.sentConfessions!);
-      recievedConfessions.put(BoxNames.recievedConfessionsList, userWithChats.recievedConfessions!);
+      convertAndSaveConfessionToLinkedList(userWithChats.sentConfessions!, sentConfessionsLinkedList, chatLengths, BoxNames.sentConfessionsLength);
+      convertAndSaveConfessionToLinkedList(userWithChats.recievedConfessions!, recievedConfessionsLinkedList, chatLengths, BoxNames.recievedConfessionsLength);
     });
   }
   catch(e){

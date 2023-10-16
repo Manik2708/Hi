@@ -16,28 +16,30 @@ class ConfessionModel{
   @HiveField(5)
   final String id;
   @HiveField(6)
-  final String status;
+  String status;
   @HiveField(7)
   final String crushName;
-  ConfessionModel({required this.senderId, required this.senderAnonymousId, required this.crushId, required this.confession, required this.time, required this.id, required this.status, required this.crushName});
+  @HiveField(8)
+  String? previousConfessionId;
+  ConfessionModel({required this.senderId, required this.senderAnonymousId, required this.crushId, required this.confession, required this.time, required this.id, required this.status, required this.crushName, this.previousConfessionId});
 
   factory ConfessionModel._confessionFromJson(Map<String, dynamic> json)=>ConfessionModel(
     id: json['_id'] as String,
-    senderId: json['SenderId'] as String,
-    senderAnonymousId: json['SenderAnonymousId'] as String,
-    crushId: json['CrushId'] as String,
-    confession: json['Confession'] as String,
-    time: json['Time'] as String,
+    senderId: json['senderId'] as String,
+    senderAnonymousId: json['senderAnonymousId'] as String,
+    crushId: json['crushId'] as String,
+    confession: json['confession'] as String,
+    time: json['time'] as String,
     status: json['status'] as String,
     crushName: json['crushName'] as String
   );
   Map<String, dynamic> _confessionToJson(ConfessionModel instance) => <String, dynamic>{
     '_id': instance.id,
-    'SenderId': instance.senderId,
-    'SenderAnonymousId': instance.senderAnonymousId,
-    'CrushId': instance.crushId,
-    'Confession': instance.confession,
-    'Time': instance.time,
+    'senderId': instance.senderId,
+    'senderAnonymousId': instance.senderAnonymousId,
+    'crushId': instance.crushId,
+    'confession': instance.confession,
+    'time': instance.time,
     'status': instance.status,
     'crushName': instance.crushName
   };

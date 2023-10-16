@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:hi/constants/global_variables.dart';
 import 'package:hive/hive.dart';
 
 
@@ -35,27 +36,27 @@ class User{
     required this.id,
 });
   User _userFromJson(Map<String, dynamic> json) => User(
-    name: json['name'] as String,
-    email: json['email'] as String,
-    anonymousId: json['anonymousId'] as String,
-    username: json['username'] as String,
-    password: json['password'] as String,
-    dob: json['dob'] as String,
-    isEmailVerified: json['isEmailVerified'] as bool,
-    token: json['token']??'' as String,
-    id: json['_id'] as String,
+    name: json[UserModelJsonController.name] as String,
+    email: json[UserModelJsonController.email] as String,
+    anonymousId: json[UserModelJsonController.anonymousId] as String,
+    username: json[UserModelJsonController.username] as String,
+    password: json[UserModelJsonController.password] as String,
+    dob: json[UserModelJsonController.dob] as String,
+    isEmailVerified: json[UserModelJsonController.isEmailVerified] as bool,
+    token: json[UserModelJsonController.token]??'' as String,
+    id: json[UserModelJsonController.id] as String,
   );
 
   Map<String, dynamic> _userToJson(User instance) => <String, dynamic>{
-    'name': instance.name,
-    'email': instance.email,
-    'anonymousId': instance.anonymousId,
-    'username': instance.username,
-    'password': instance.password,
-    'dob': instance.dob.toString(),
-    'isEmailVerified': instance.isEmailVerified.toString(),
-    'token': instance.token,
-    '_id': instance.id
+    UserModelJsonController.name: instance.name,
+    UserModelJsonController.email: instance.email,
+    UserModelJsonController.anonymousId: instance.anonymousId,
+    UserModelJsonController.username: instance.username,
+    UserModelJsonController.password: instance.password,
+    UserModelJsonController.dob: instance.dob.toString(),
+    UserModelJsonController.isEmailVerified: instance.isEmailVerified.toString(),
+    UserModelJsonController.token: instance.token,
+    UserModelJsonController.id: instance.id
   };
   User fromJson(Map<String, dynamic> json)=>_userFromJson(json);
   String toJson(User user)=>jsonEncode(_userToJson(user));

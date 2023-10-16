@@ -1,3 +1,4 @@
+import 'package:hi/constants/global_variables.dart';
 import 'package:hive/hive.dart';
 import 'package:hi/connect/models/confession.dart';
 import 'package:hi/connect/models/user.dart';
@@ -24,17 +25,17 @@ class UserWithChats extends User {
     required this.recievedConfessions
   });
   factory UserWithChats._userFromJson(Map<String, dynamic> json) => UserWithChats(
-    name: json['name'] as String,
-    email: json['email'] as String,
-    anonymousId: json['anonymousId'] as String,
-    username: json['username'] as String,
-    password: json['password'] as String,
-    dob: json['dob'] as String,
-    isEmailVerified: json['isEmailVerified'] as bool,
-    token: json['token']??'' as String,
-    id: json['_id'] as String,
-    sentConfessions: json['sentConfessionsList']!=null?List<ConfessionModel>.from(json['sentConfessionsList'].map((x)=>ConfessionModel.fromJson(x))):[],
-    recievedConfessions: json['recievedConfessionsList']!=null?List<ConfessionModel>.from(json['recievedConfessionsList'].map((x)=>ConfessionModel.fromJson(x))):[]
+    name: json[UserModelJsonController.name] as String,
+    email: json[UserModelJsonController.email] as String,
+    anonymousId: json[UserModelJsonController.anonymousId] as String,
+    username: json[UserModelJsonController.username] as String,
+    password: json[UserModelJsonController.password] as String,
+    dob: json[UserModelJsonController.dob] as String,
+    isEmailVerified: json[UserModelJsonController.isEmailVerified] as bool,
+    token: json[UserModelJsonController.token]??'' as String,
+    id: json[UserModelJsonController.id] as String,
+    sentConfessions: json[UserModelJsonController.sentConfessionList]!=null?List<ConfessionModel>.from(json[UserModelJsonController.sentConfessionList].map((x)=>ConfessionModel.fromJson(x))):[],
+    recievedConfessions: json[UserModelJsonController.recievedConfessionList]!=null?List<ConfessionModel>.from(json[UserModelJsonController.recievedConfessionList].map((x)=>ConfessionModel.fromJson(x))):[]
   );
   factory UserWithChats.fromJson(Map<String, dynamic> json)=>UserWithChats._userFromJson(json);
 }
