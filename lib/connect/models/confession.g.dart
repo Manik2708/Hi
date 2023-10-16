@@ -25,13 +25,14 @@ class ConfessionModelAdapter extends TypeAdapter<ConfessionModel> {
       id: fields[5] as String,
       status: fields[6] as String,
       crushName: fields[7] as String,
+      previousConfessionId: fields[8] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ConfessionModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.senderId)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class ConfessionModelAdapter extends TypeAdapter<ConfessionModel> {
       ..writeByte(6)
       ..write(obj.status)
       ..writeByte(7)
-      ..write(obj.crushName);
+      ..write(obj.crushName)
+      ..writeByte(8)
+      ..write(obj.previousConfessionId);
   }
 
   @override

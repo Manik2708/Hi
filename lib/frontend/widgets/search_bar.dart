@@ -18,32 +18,28 @@ class CustomSearchBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black,),
-            onPressed: (){
-              context.read<SearchUserProvider>().setSearchButtonClicked(false);
-              context.read<SearchUserProvider>().setBool(false);
-            },
-          ),
+          SizedBox(width: MediaQuery.of(context).size.width*0.038,),
           Container(
-            width: 300,
+            width: MediaQuery.of(context).size.width*0.85,
             height: 55,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             child: TextField(
               autofocus: true,
               decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+                contentPadding: const EdgeInsets.only(left: 0, top: 0, bottom: 55),
+                prefix: IconButton(onPressed: (){
+                  context.read<SearchUserProvider>().setSearchButtonClicked(false);
+                  context.read<SearchUserProvider>().setBool(false);
+                  },icon: const Icon(Icons.arrow_back,color: Colors.black,size: 20,),),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(
-                    color: Colors.black,
-                    width: 1.5
-                  )
+                enabledBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                 )
               ),
               style: const TextStyle(

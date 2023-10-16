@@ -24,6 +24,7 @@ class VerifyOtp{
          body: jsonEncode({'otptoken': context.read<OtpToken>().otpToken, 'otp': code})
      );
      httpErrorHandle(res: res, context: context, onSuccess: ()async{
+       debugPrint('Hello');
        showDialogBox(context: context, title: 'Success', content: 'Email Verified Successfully', buttonText: null, onClick: null);
        await updateUserDataInCache(context);
        Navigator.pushNamed(context, '/home-screen');

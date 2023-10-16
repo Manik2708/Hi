@@ -23,7 +23,7 @@ class VerifyEmail extends StatefulWidget {
 class _VerifyEmailState extends State<VerifyEmail> {
   final VerifyOtp verifyOtp=VerifyOtp();
   final CountdownController _countdownController=CountdownController();
-  Future<bool> moveToBackScreen()async{
+  Future<bool> dontMoveToBackScreen()async{
     return false;
   }
   void onClickHere(){
@@ -43,7 +43,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
     User user=context.read<UserProvider>().user;
     context.read<SetState>().setOnPhoneClick(() {onClickHere();});
     return WillPopScope(
-      onWillPop: moveToBackScreen,
+      onWillPop: dontMoveToBackScreen,
       child: GestureDetector(
         onTap: hideKeyboard,
         child: Scaffold(

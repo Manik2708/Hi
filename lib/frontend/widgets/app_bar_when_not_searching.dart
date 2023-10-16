@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../providers/search_user.dart';
 import '../providers/user.dart';
 
@@ -23,7 +22,7 @@ Widget appBarWhenNotSearching( BuildContext context){
                 ),
               ),
           ),
-        const SizedBox(width: 200,),
+        SizedBox(width: MediaQuery.of(context).size.width*0.50,),
         Padding(
           padding: const EdgeInsets.only(left: 10),
             child: IconButton(onPressed: (){context.read<SearchUserProvider>().setSearchButtonClicked(true);}, icon: const Icon(Icons.person_search, color: Colors.black, size: 35,)),
