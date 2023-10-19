@@ -1,14 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hi/connect/models/confession.dart';
 import 'package:hi/frontend/boxes.dart';
 
-void loadConfessions(List<ConfessionModel> list, bool isFirstTimeLoading){
+Future<List<ConfessionModel>> loadConfessions(String pageKey)async{
+  List<ConfessionModel> list=[];
   ConfessionModel? confessionModel;
-  if(isFirstTimeLoading){
+  if(pageKey=='first-page'){
       confessionModel=sentConfessionsLinkedList.get(BoxNames.lastConfession);
       list.add(confessionModel!);
   }
   else{
-    confessionModel=list.last;
+    confessionModel=sentConfessionsLinkedList.get(pageKey);
   }
   for(int i=0;i<20;i++){
     if(confessionModel!.previousConfessionId==null){
@@ -17,5 +19,6 @@ void loadConfessions(List<ConfessionModel> list, bool isFirstTimeLoading){
     confessionModel=sentConfessionsLinkedList.get(confessionModel.previousConfessionId);
     list.add(sentConfessionsLinkedList.get(confessionModel!.id)!);
   }
+  return list;
 }
 

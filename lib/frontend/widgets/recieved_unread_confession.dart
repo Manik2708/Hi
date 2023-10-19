@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:hi/connect/models/confession.dart';
+import 'package:hi/connect/models/recieved_confession.dart';
 import 'package:hi/constants/global_variables.dart';
-DateTime dateTime=DateTime.now();
-Widget commonSentConfession(BuildContext context,ConfessionModel confessionModel){
+import 'package:hi/frontend/widgets/sent_confessions.dart';
+Widget commonRecievedConfession(BuildContext context,RecievedConfessionModel confessionModel){
   return SizedBox(
     height: 90,
     child: GestureDetector(
       onTap: (){
-          showDialog(context: context, builder: (context){
+        showDialog(context: context, builder: (context){
           return AlertDialog(
             actionsAlignment: MainAxisAlignment.start,
             actions: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(child: Center(child: Text(confessionModel.crushName, style: const TextStyle(fontSize: 20),)),),
+                  SizedBox(child: Center(child: Text(confessionModel.senderAnonymousId, style: const TextStyle(fontSize: 20),)),),
                   SingleChildScrollView(
                     child: SizedBox(
                         height: 500,
@@ -24,14 +24,13 @@ Widget commonSentConfession(BuildContext context,ConfessionModel confessionModel
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(child: Text(timeFormatter.format(DateTime.parse(confessionModel.time))),),
-                      SizedBox(child: Text(confessionModel.status),)
                     ],
                   )
                 ],
               )
             ],
           );
-          });
+        });
       },
       child: ConstrainedBox(
         constraints: const BoxConstraints.expand(),
@@ -52,47 +51,43 @@ Widget commonSentConfession(BuildContext context,ConfessionModel confessionModel
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(child: Text(confessionModel.crushName, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)),
-                          SizedBox(child: Text(confessionModel.confession, style: const TextStyle(overflow: TextOverflow.ellipsis),)),
+                          SizedBox(child: Text(confessionModel.senderAnonymousId, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)),
+                          SizedBox(height: 20,child: Text(confessionModel.confession, style: const TextStyle(overflow: TextOverflow.ellipsis),)),
                           SizedBox(child: Text(timeFormatter.format(DateTime.parse(confessionModel.time))),)
                         ],
                       ),
                     ],
                   ),
                 ),
-                Container(alignment: Alignment.topRight,child: Text(confessionModel.status, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500), textAlign: TextAlign.end,)),
-            ],
-          ),
+              ],
+            ),
           ),
         ),
       ),
     ),
   );
 }
-Widget commonSentConfessionWithDate(BuildContext context,ConfessionModel confessionModel){
+Widget commonRecievedConfessionWithDate(BuildContext context,RecievedConfessionModel confessionModel){
   return SizedBox(
     height: 120,
     child: ListView(
       physics: const NeverScrollableScrollPhysics(),
-        children: [
-          const SizedBox(height: 5,),
-          Center(child: SizedBox(height: 20,child: Text(dateFormatter.format(DateTime.parse(confessionModel.time)), style: const TextStyle(color: Colors.black),))),
-          const SizedBox(height: 5,),
-          commonSentConfession(context, confessionModel)
-        ],
+      children: [
+        const SizedBox(height: 5,),
+        Center(child: SizedBox(height: 20,child: Text(dateFormatter.format(DateTime.parse(confessionModel.time)), style: const TextStyle(color: Colors.black),))),
+        const SizedBox(height: 5,),
+        commonRecievedConfession(context, confessionModel)
+      ],
     ),
   );
 }
-Widget finalListSentConfessionWidget(BuildContext context,ConfessionModel confessionModel){
-    if (dateFormatter.format(DateTime.parse(confessionModel.time))==dateFormatter.format(dateTime)) {
-      return commonSentConfession(context, confessionModel);
-    }
-    else{
-      dateTime=DateTime.parse(confessionModel.time);
-      return commonSentConfessionWithDate(context,confessionModel);
-    }
+
+Widget finalListRecievedConfessionWidget(BuildContext context,RecievedConfessionModel confessionModel){
+  if (dateFormatter.format(DateTime.parse(confessionModel.time))==dateFormatter.format(dateTime)) {
+    return commonRecievedConfession(context, confessionModel);
+  }
+  else{
+    dateTime=DateTime.parse(confessionModel.time);
+    return commonRecievedConfessionWithDate(context,confessionModel);
+  }
 }
-
-
-
-
