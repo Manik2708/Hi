@@ -6,7 +6,6 @@ import 'package:hi/connect/models/user_with_chats.dart';
 import 'package:hi/frontend/boxes.dart';
 import 'package:hi/frontend/functions/app_is_closed.dart';
 import 'package:hi/frontend/functions/firebase_notifications.dart';
-import 'package:hi/frontend/functions/socket_on.dart';
 import 'package:hi/frontend/providers/change_password.dart';
 import 'package:hi/frontend/providers/date_of_birth.dart';
 import 'package:hi/frontend/providers/otp_token.dart';
@@ -30,7 +29,6 @@ void main()async{
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await askForPermissions();
-  socketOn();
   await Hive.initFlutter();
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(UserWithChatsAdapter());

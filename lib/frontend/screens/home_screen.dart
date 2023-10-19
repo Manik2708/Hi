@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setTheUserOnline();
+    socketOn(context);
     getToken(context);
     setupInteractedMessage();
     receiveForegroundNotification(() {

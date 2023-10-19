@@ -7,12 +7,14 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 
 io.Socket? socket;
 
-void socketOn(){
+void socketOn(BuildContext context){
   try{
      socket=io.io(uri, <String, dynamic>{
-        'transports': ['websocket']
+        'transports': ['websocket'],
       });
-      socket!.connect();
+      socket!.on('connect', (data) {
+        socket!.emit(EventNames.userOnline, context.read<UserProvider>().user.token);
+      });
   }
   catch(e){
     debugPrint(e.toString());
