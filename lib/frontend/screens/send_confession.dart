@@ -4,10 +4,15 @@ import 'package:hi/frontend/functions/send_confession.dart';
 import 'package:hi/frontend/widgets/common_button.dart';
 import 'package:hi/frontend/widgets/common_text_field.dart';
 
-class CrushScreen extends StatelessWidget {
+class CrushScreen extends StatefulWidget {
   final CrushModel crush;
   const CrushScreen({super.key, required this.crush});
 
+  @override
+  State<CrushScreen> createState() => _CrushScreenState();
+}
+bool isButtonClickable=true;
+class _CrushScreenState extends State<CrushScreen> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController _confessionController=TextEditingController();
@@ -16,7 +21,7 @@ class CrushScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
-        title: Text(crush.username, style: const TextStyle(color: Colors.black),),
+        title: Text(widget.crush.username, style: const TextStyle(color: Colors.black),),
         centerTitle: true,
         iconTheme: const IconThemeData(
           color: Colors.black
@@ -33,7 +38,7 @@ class CrushScreen extends StatelessWidget {
                     children: [
                       const Icon(Icons.account_circle_rounded, size: 70,),
                       const SizedBox(width: 5,),
-                       Text(crush.name, style: const TextStyle(fontSize: 20),)
+                       Text(widget.crush.name, style: const TextStyle(fontSize: 20),)
                     ],
                   ),
                   ),
@@ -86,7 +91,12 @@ class CrushScreen extends StatelessWidget {
               Center(child: CommonTextField(controller: _confessionController, maxLines: 200, height: 300, hintText: 'Write your Confession here',focusNode: _focusNode,)),
               const SizedBox(height: 10,),
               Center(child: CommonButton(text: const Text('Confess'), onClick: (){
-                sendConfession(crush, context, _confessionController.text);
+                if(isButtonClickable){
+                  sendConfession(widget.crush, context, _confessionController.text);
+                  setState(() {
+                    isButtonClickable=false;
+                  });
+                }
               }, width: 350, height: 50,),)
             ],
           ),

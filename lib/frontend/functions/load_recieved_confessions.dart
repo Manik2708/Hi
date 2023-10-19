@@ -17,7 +17,7 @@ Future<List<RecievedConfessionModel>> loadUnreadRecievedConfessions(String pageK
   );
   List<RecievedConfessionModel> list=[];
   httpErrorHandle(res: res, context: context, onSuccess: (){
-    list=List<RecievedConfessionModel>.from(jsonDecode(res.body)['confession-array'].map((x)=>RecievedConfessionModel.fromJson(x)));
+    list=List<RecievedConfessionModel>.from(jsonDecode(res.body)['list'].map((x)=>RecievedConfessionModel.fromJson(x)));
   });
   return list;
 }

@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 const String imageFolder='lib/assets/images/';
 const String iconFolder='lib/assets/icons/';
-String uri='http://192.168.0.103:3000';
+String uri='http://192.168.0.111:3000';
 final dateFormatter = DateFormat('dd-MM-yyyy');
 final timeFormatter = DateFormat('HH:mm:ss');
 class EventNames{
